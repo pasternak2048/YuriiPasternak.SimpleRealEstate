@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces;
 using YuriiPasternak.SimpleRealEstate.Domain.Identity;
+using YuriiPasternak.SimpleRealEstate.Infrastructure.Authentication;
 using YuriiPasternak.SimpleRealEstate.Infrastructure.Context;
 
 namespace YuriiPasternak.SimpleRealEstate.Infrastructure
@@ -18,6 +20,8 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure
                 .AddRoles<AppRole>()
                 .AddRoleManager<RoleManager<AppRole>>()
                 .AddEntityFrameworkStores<DataContext>();
+
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         }
     }
 }
