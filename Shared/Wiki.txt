@@ -1,0 +1,5 @@
+//Infrastructure
+Install-Package Microsoft.EntityFrameworkCore.Tools -Version --latest
+
+//WebAPI
+Install-Package Microsoft.EntityFrameworkCore.Design -Version --latest
