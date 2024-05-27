@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces;
 
 namespace YuriiPasternak.SimpleRealEstate.WebAPI.Controllers
@@ -13,6 +14,7 @@ namespace YuriiPasternak.SimpleRealEstate.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<string> GetCurrentUser()
         {
             var result = _currentUserInitializer.UserId?.ToString();

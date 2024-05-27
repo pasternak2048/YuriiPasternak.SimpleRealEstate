@@ -7,9 +7,9 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Interceptors
 {
     public class AuditableEntityInterceptor : SaveChangesInterceptor
     {
-        private readonly ICurrentUserInitializer _currentUserService;
+        private readonly ICurrentUserService _currentUserService;
 
-        public AuditableEntityInterceptor(ICurrentUserInitializer currentUserService)
+        public AuditableEntityInterceptor(ICurrentUserService currentUserService)
         {
             _currentUserService = currentUserService;
         }

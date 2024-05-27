@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwaggerServices();
-//builder.Services.ConfigureCorsPolicy();
+builder.Services.ConfigureCorsPolicy();
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddHttpContextAccessor();
@@ -25,28 +25,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Move into separate middlware
+app.Use(async (context, next) =>
+{
+    var user = context.User;
+    var currentUser = context.RequestServices.GetRequiredService<ICurrentUserInitializer>();
 
+    currentUser.UserId ??= user.FindFirstValue("Id");
+
+    currentUser.UserRole ??= user.FindFirstValue(ClaimTypes.Role);
+
+    await next();
+});
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.Use(async (context, next) =>
-{
-    var user = context.User;
-    var currentUser = context.RequestServices.GetRequiredService<ICurrentUserInitializer>();
-
-    currentUser.UserId ??= Guid.TryParse(user.FindFirstValue(ClaimTypes.NameIdentifier),
-                out var result)
-                ? result
-                : default(Guid?);
-
-    currentUser.UserRole ??= user.FindFirstValue(ClaimTypes.Role);
-
-    await next();
-});
 
 app.Run();

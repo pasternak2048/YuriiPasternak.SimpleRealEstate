@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces;
 using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces.Authentication;
 using YuriiPasternak.SimpleRealEstate.Domain.Identity;
@@ -24,9 +28,24 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure
                 .AddRoleManager<RoleManager<AppRole>>()
                 .AddEntityFrameworkStores<DataContext>();
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opts =>
+                {
+                    opts.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"])),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                    };
+                });
+
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddSingleton<ICurrentUserInitializer, CurrentUserInitializer>();
             services.AddScoped<AuditableEntityInterceptor>();
-            services.AddScoped<ICurrentUserInitializer, CurrentUserInitializer>();
+            services.AddHttpContextAccessor();
         }
     }
 }
