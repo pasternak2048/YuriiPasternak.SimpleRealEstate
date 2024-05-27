@@ -1,3 +1,4 @@
+using System.Reflection;
 using YuriiPasternak.SimpleRealEstate.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwaggerServices();
 builder.Services.ConfigureInfrastructure(builder.Configuration);
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
