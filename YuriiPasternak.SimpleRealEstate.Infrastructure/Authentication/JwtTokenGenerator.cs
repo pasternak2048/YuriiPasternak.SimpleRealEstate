@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces;
+using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces.Authentication;
 
 namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Authentication
 {

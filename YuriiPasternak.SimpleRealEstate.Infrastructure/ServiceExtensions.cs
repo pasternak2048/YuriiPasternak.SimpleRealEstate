@@ -3,9 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces;
+using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces.Authentication;
 using YuriiPasternak.SimpleRealEstate.Domain.Identity;
 using YuriiPasternak.SimpleRealEstate.Infrastructure.Authentication;
 using YuriiPasternak.SimpleRealEstate.Infrastructure.Context;
+using YuriiPasternak.SimpleRealEstate.Infrastructure.Interceptors;
+using YuriiPasternak.SimpleRealEstate.Infrastructure.Services;
 
 namespace YuriiPasternak.SimpleRealEstate.Infrastructure
 {
@@ -22,6 +25,8 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure
                 .AddEntityFrameworkStores<DataContext>();
 
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            services.AddScoped<AuditableEntityInterceptor>();
+            services.AddScoped<ICurrentUserInitializer, CurrentUserInitializer>();
         }
     }
 }
