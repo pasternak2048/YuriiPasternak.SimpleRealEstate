@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces;
+using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces.Authentication;
 
 namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Authentication
 {
@@ -31,7 +31,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Authentication
                 new Claim("FirstName", firstName),
                 new Claim("LastName", lastName),
                 new Claim("Email", email),
-                new Claim(ClaimTypes.Role, role)
+                new Claim("Role", role)
             //new Claim("Role", role),
         };
 

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces;
+using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces.Authentication;
 using YuriiPasternak.SimpleRealEstate.Domain.Identity;
 using YuriiPasternak.SimpleRealEstate.WebAPI.Models.Authentication;
 

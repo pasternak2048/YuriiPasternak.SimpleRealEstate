@@ -1,4 +1,4 @@
-﻿namespace YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces
+﻿namespace YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces.Authentication
 {
     public interface IJwtTokenGenerator
     {
