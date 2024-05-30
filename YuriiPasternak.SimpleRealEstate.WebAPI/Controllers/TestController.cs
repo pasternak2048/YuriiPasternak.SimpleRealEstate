@@ -17,8 +17,10 @@ namespace YuriiPasternak.SimpleRealEstate.WebAPI.Controllers
         [Authorize]
         public ActionResult<string> GetCurrentUser()
         {
-            var result = _currentUserInitializer.UserId?.ToString();
+            var userId = _currentUserInitializer.UserId?.ToString();
+            var userRole = _currentUserInitializer.UserRole?.ToString();
 
+            var result = userId + " " + userRole;
             return result;
         }
     }

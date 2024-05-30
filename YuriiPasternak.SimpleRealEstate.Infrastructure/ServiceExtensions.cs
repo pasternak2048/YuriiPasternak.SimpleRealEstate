@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -41,8 +40,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure
                 });
 
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddSingleton<ICurrentUserInitializer, CurrentUserInitializer>();
             services.AddScoped<AuditableEntityInterceptor>();
             services.AddHttpContextAccessor();

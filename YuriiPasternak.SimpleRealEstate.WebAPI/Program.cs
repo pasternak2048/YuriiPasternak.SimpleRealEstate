@@ -30,9 +30,12 @@ app.Use(async (context, next) =>
     var user = context.User;
     var currentUser = context.RequestServices.GetRequiredService<ICurrentUserInitializer>();
 
-    currentUser.UserId ??= user.FindFirstValue("Id");
+    currentUser.UserId ??= Guid.TryParse(user.FindFirstValue("Id"),
+                out var result)
+                ? result
+                : default(Guid?);
 
-    currentUser.UserRole ??= user.FindFirstValue(ClaimTypes.Role);
+    currentUser.UserRole ??= user.FindFirstValue("Role");
 
     await next();
 });

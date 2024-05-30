@@ -31,7 +31,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Authentication
                 new Claim("FirstName", firstName),
                 new Claim("LastName", lastName),
                 new Claim("Email", email),
-                new Claim(ClaimTypes.Role, role)
+                new Claim("Role", role)
             //new Claim("Role", role),
         };
 
