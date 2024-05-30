@@ -12,7 +12,7 @@ using YuriiPasternak.SimpleRealEstate.Infrastructure.Authentication;
 using YuriiPasternak.SimpleRealEstate.Infrastructure.Context;
 using YuriiPasternak.SimpleRealEstate.Infrastructure.Interceptors;
 using YuriiPasternak.SimpleRealEstate.Infrastructure.Services;
-
+#nullable disable
 namespace YuriiPasternak.SimpleRealEstate.Infrastructure
 {
     public static class ServiceExtensions
@@ -21,6 +21,8 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DataContext>(opt => opt.UseSqlServer(connectionString));
+
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<DataContext>());
 
             services.AddIdentityCore<AppUser>()
                 .AddRoles<AppRole>()

@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces;
 using YuriiPasternak.SimpleRealEstate.Domain.Common;
+using YuriiPasternak.SimpleRealEstate.Domain.Entities;
 using YuriiPasternak.SimpleRealEstate.Domain.Identity;
 using YuriiPasternak.SimpleRealEstate.Infrastructure.Interceptors;
 
 namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Context
 {
-    public class DataContext : IdentityDbContext<AppUser, AppRole, Guid>
+    public class DataContext : IdentityDbContext<AppUser, AppRole, Guid>, IApplicationDbContext
     {
         private readonly AuditableEntityInterceptor _auditableEntityInterceptor;
         public DataContext(DbContextOptions<DataContext> options,
@@ -15,6 +17,18 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Context
         {
             _auditableEntityInterceptor = auditableEntityInterceptor;
         }
+
+        public DbSet<HeatingType> HeatingTypes { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<LocationType> LocationTypes { get; set; }
+        public DbSet<PlanningType> PlanningTypes { get; set; }
+        public DbSet<Realty> Realties { get; set; }
+        public DbSet<RealtyHeatingType> RealtyHeatingTypes { get; set; }
+        public DbSet<RealtyPlanningType> RealtyPlanningTypes { get; set; }
+        public DbSet<RealtyStatus> RealtyStatuses { get; set; }
+        public DbSet<RealtyType> RealtyTypes { get; set; }
+        public DbSet<RealtyWallType> RealtyWallTypes { get; set; }
+        public DbSet<WallType> WallTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
