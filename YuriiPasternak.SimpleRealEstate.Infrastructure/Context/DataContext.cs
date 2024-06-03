@@ -4,6 +4,7 @@ using System.Reflection;
 using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces;
 using YuriiPasternak.SimpleRealEstate.Domain.Common;
 using YuriiPasternak.SimpleRealEstate.Domain.Entities;
+using YuriiPasternak.SimpleRealEstate.Domain.Entities.Location;
 using YuriiPasternak.SimpleRealEstate.Domain.Identity;
 using YuriiPasternak.SimpleRealEstate.Infrastructure.Interceptors;
 
@@ -19,8 +20,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Context
         }
 
         public DbSet<HeatingType> HeatingTypes { get; set; }
-        public DbSet<Location> Locations { get; set; }
-        public DbSet<LocationType> LocationTypes { get; set; }
         public DbSet<PlanningType> PlanningTypes { get; set; }
         public DbSet<Realty> Realties { get; set; }
         public DbSet<RealtyHeatingType> RealtyHeatingTypes { get; set; }
@@ -29,6 +28,14 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Context
         public DbSet<RealtyType> RealtyTypes { get; set; }
         public DbSet<RealtyWallType> RealtyWallTypes { get; set; }
         public DbSet<WallType> WallTypes { get; set; }
+
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<TerritorialCommunity> TerritorialCommunities { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<CityArea> CityAreas { get; set; }
+        public DbSet<Street> Streets { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
