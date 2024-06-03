@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace YuriiPasternak.Tools.RegionUpdater.Models;
+
+public partial class RealtyType
+{
+    public int Id { get; set; }
+
+    public string? Name { get; set; }
+
+    public virtual ICollection<Realty> Realties { get; set; } = new List<Realty>();
+}
