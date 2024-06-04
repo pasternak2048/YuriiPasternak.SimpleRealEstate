@@ -22,4 +22,8 @@
     <ProjectReference Include="..\YuriiPasternak.SimpleRealEstate.Application\YuriiPasternak.SimpleRealEstate.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
