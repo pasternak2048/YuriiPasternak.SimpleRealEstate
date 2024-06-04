@@ -27,6 +27,8 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Context
         public DbSet<RealtyType> RealtyTypes { get; set; }
         public DbSet<RealtyWallType> RealtyWallTypes { get; set; }
         public DbSet<WallType> WallTypes { get; set; }
+        public DbSet<TerritorialObject> TerritorialObjects { get; set; }
+        public DbSet<TerritorialObjectType> TerritorialObjectTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

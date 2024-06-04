@@ -14,5 +14,8 @@ namespace YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces
         DbSet<RealtyType> RealtyTypes { get; }
         DbSet<RealtyWallType> RealtyWallTypes { get; }
         DbSet<WallType> WallTypes { get; }
+
+        DbSet<TerritorialObject> TerritorialObjects { get; }
+        DbSet<TerritorialObjectType> TerritorialObjectTypes { get; }
     }
 }
