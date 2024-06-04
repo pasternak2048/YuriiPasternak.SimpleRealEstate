@@ -12,8 +12,8 @@ using YuriiPasternak.SimpleRealEstate.Infrastructure.Context;
 namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240530152102_AddedEntities")]
-    partial class AddedEntities
+    [Migration("20240604150023_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -176,92 +176,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.Location", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("ID");
-
-                    b.Property<Guid?>("CityAreaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DistrictId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("LocationTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("RegionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityAreaId");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("DistrictId");
-
-                    b.HasIndex("LocationTypeId");
-
-                    b.HasIndex("RegionId");
-
-                    b.ToTable("Locations");
-                });
-
-            modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.LocationType", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("ID");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LocationTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 0,
-                            Name = "None"
-                        },
-                        new
-                        {
-                            Id = 1,
-                            Name = "Street"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "CityArea"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "City"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "District"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Region"
-                        });
-                });
-
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.PlanningType", b =>
                 {
                     b.Property<int>("Id")
@@ -351,9 +265,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     b.Property<bool?>("IsLastFloor")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("LocationId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTimeOffset?>("ModifiedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -369,17 +280,20 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     b.Property<int?>("RoomCount")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("TerritorialObjectId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
-
-                    b.HasIndex("LocationId");
 
                     b.HasIndex("ModifiedById");
 
                     b.HasIndex("RealtyStatusId");
 
                     b.HasIndex("RealtyTypeId");
+
+                    b.HasIndex("TerritorialObjectId");
 
                     b.ToTable("Realties");
                 });
@@ -595,6 +509,109 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     b.ToTable("RealtyWallTypes");
                 });
 
+            modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.TerritorialObject", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("ID");
+
+                    b.Property<Guid?>("CommunityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CommunityKATOTTG")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("DistrictId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DistrictKATOTTG")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KATOTTG")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("LocalityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LocalityKATOTTG")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("RegionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RegionKATOTTG")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("TerritorialObjects");
+                });
+
+            modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.TerritorialObjectType", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TerritorialObjectTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 0,
+                            Name = "None"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Name = "Region"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "District"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Community"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "City"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "CityDistrict"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Village"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "SmallTown"
+                        });
+                });
+
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.WallType", b =>
                 {
                     b.Property<int>("Id")
@@ -783,51 +800,12 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.Location", b =>
-                {
-                    b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.Location", "CityArea")
-                        .WithMany()
-                        .HasForeignKey("CityAreaId");
-
-                    b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.Location", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId");
-
-                    b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.Location", "District")
-                        .WithMany()
-                        .HasForeignKey("DistrictId");
-
-                    b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.LocationType", "LocationType")
-                        .WithMany("Locations")
-                        .HasForeignKey("LocationTypeId");
-
-                    b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.Location", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId");
-
-                    b.Navigation("City");
-
-                    b.Navigation("CityArea");
-
-                    b.Navigation("District");
-
-                    b.Navigation("LocationType");
-
-                    b.Navigation("Region");
-                });
-
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.Realty", b =>
                 {
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.Location", "Location")
-                        .WithMany("Realties")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Identity.AppUser", null)
@@ -847,11 +825,17 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Location");
+                    b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.TerritorialObject", "TerritorialObject")
+                        .WithMany("Realties")
+                        .HasForeignKey("TerritorialObjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("RealtyStatus");
 
                     b.Navigation("RealtyType");
+
+                    b.Navigation("TerritorialObject");
                 });
 
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.RealtyHeatingType", b =>
@@ -944,19 +928,20 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     b.Navigation("WallType");
                 });
 
+            modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.TerritorialObject", b =>
+                {
+                    b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.TerritorialObjectType", "TerritorialObjectType")
+                        .WithMany("TerritorialObjects")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TerritorialObjectType");
+                });
+
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.HeatingType", b =>
                 {
                     b.Navigation("RealtyHeatingTypes");
-                });
-
-            modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.Location", b =>
-                {
-                    b.Navigation("Realties");
-                });
-
-            modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.LocationType", b =>
-                {
-                    b.Navigation("Locations");
                 });
 
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.PlanningType", b =>
@@ -981,6 +966,16 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.RealtyType", b =>
                 {
                     b.Navigation("Realties");
+                });
+
+            modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.TerritorialObject", b =>
+                {
+                    b.Navigation("Realties");
+                });
+
+            modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.TerritorialObjectType", b =>
+                {
+                    b.Navigation("TerritorialObjects");
                 });
 
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.WallType", b =>
