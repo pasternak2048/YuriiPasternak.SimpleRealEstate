@@ -8,13 +8,51 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedEntities : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterDatabase(
-                collation: "SQL_Latin1_General_CP1_CI_AS");
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "HeatingTypes",
@@ -26,18 +64,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HeatingTypes", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LocationTypes",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LocationTypes", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,6 +103,18 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TerritorialObjectTypes",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TerritorialObjectTypes", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WallTypes",
                 columns: table => new
                 {
@@ -89,45 +127,137 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Locations",
+                name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LocationTypeId = table.Column<int>(type: "int", nullable: true),
-                    RegionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DistrictId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CityId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CityAreaId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Locations", x => x.ID);
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Locations_LocationTypes_LocationTypeId",
-                        column: x => x.LocationTypeId,
-                        principalTable: "LocationTypes",
-                        principalColumn: "ID");
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Locations_Locations_CityAreaId",
-                        column: x => x.CityAreaId,
-                        principalTable: "Locations",
-                        principalColumn: "ID");
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_Locations_Locations_CityId",
-                        column: x => x.CityId,
-                        principalTable: "Locations",
-                        principalColumn: "ID");
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_Locations_Locations_DistrictId",
-                        column: x => x.DistrictId,
-                        principalTable: "Locations",
-                        principalColumn: "ID");
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Locations_Locations_RegionId",
-                        column: x => x.RegionId,
-                        principalTable: "Locations",
-                        principalColumn: "ID");
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TerritorialObjects",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RegionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DistrictId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CommunityId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LocalityId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    KATOTTG = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RegionKATOTTG = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DistrictKATOTTG = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CommunityKATOTTG = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LocalityKATOTTG = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TerritorialObjects", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_TerritorialObjects_TerritorialObjectTypes_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "TerritorialObjectTypes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -137,7 +267,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RealtyTypeId = table.Column<int>(type: "int", nullable: false),
-                    LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TerritorialObjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Floor = table.Column<int>(type: "int", nullable: true),
                     IsFirstFloor = table.Column<bool>(type: "bit", nullable: true),
                     IsLastFloor = table.Column<bool>(type: "bit", nullable: true),
@@ -167,12 +297,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Realties_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Realties_RealtyStatuses_RealtyStatusId",
                         column: x => x.RealtyStatusId,
                         principalTable: "RealtyStatuses",
@@ -182,6 +306,12 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         name: "FK_Realties_RealtyTypes_RealtyTypeId",
                         column: x => x.RealtyTypeId,
                         principalTable: "RealtyTypes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Realties_TerritorialObjects_TerritorialObjectId",
+                        column: x => x.TerritorialObjectId,
+                        principalTable: "TerritorialObjects",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -320,19 +450,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "LocationTypes",
-                columns: new[] { "ID", "Name" },
-                values: new object[,]
-                {
-                    { 0, "None" },
-                    { 1, "Street" },
-                    { 2, "CityArea" },
-                    { 3, "City" },
-                    { 4, "District" },
-                    { 5, "Region" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "PlanningTypes",
                 columns: new[] { "ID", "Name" },
                 values: new object[,]
@@ -370,6 +487,21 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "TerritorialObjectTypes",
+                columns: new[] { "ID", "Name" },
+                values: new object[,]
+                {
+                    { 0, "None" },
+                    { 1, "Region" },
+                    { 2, "District" },
+                    { 3, "Community" },
+                    { 4, "City" },
+                    { 5, "CityDistrict" },
+                    { 6, "Village" },
+                    { 7, "SmallTown" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "WallTypes",
                 columns: new[] { "ID", "Name" },
                 values: new object[,]
@@ -381,39 +513,48 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locations_CityAreaId",
-                table: "Locations",
-                column: "CityAreaId");
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locations_CityId",
-                table: "Locations",
-                column: "CityId");
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locations_DistrictId",
-                table: "Locations",
-                column: "DistrictId");
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locations_LocationTypeId",
-                table: "Locations",
-                column: "LocationTypeId");
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locations_RegionId",
-                table: "Locations",
-                column: "RegionId");
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Realties_CreatedById",
                 table: "Realties",
                 column: "CreatedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Realties_LocationId",
-                table: "Realties",
-                column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Realties_ModifiedById",
@@ -429,6 +570,11 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 name: "IX_Realties_RealtyTypeId",
                 table: "Realties",
                 column: "RealtyTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Realties_TerritorialObjectId",
+                table: "Realties",
+                column: "TerritorialObjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RealtyHeatingTypes_CreatedById",
@@ -489,11 +635,31 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 name: "IX_RealtyWallTypes_WallTypeId",
                 table: "RealtyWallTypes",
                 column: "WallTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TerritorialObjects_TypeId",
+                table: "TerritorialObjects",
+                column: "TypeId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
             migrationBuilder.DropTable(
                 name: "RealtyHeatingTypes");
 
@@ -502,6 +668,9 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "RealtyWallTypes");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "HeatingTypes");
@@ -516,7 +685,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 name: "WallTypes");
 
             migrationBuilder.DropTable(
-                name: "Locations");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "RealtyStatuses");
@@ -525,10 +694,10 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 name: "RealtyTypes");
 
             migrationBuilder.DropTable(
-                name: "LocationTypes");
+                name: "TerritorialObjects");
 
-            migrationBuilder.AlterDatabase(
-                oldCollation: "SQL_Latin1_General_CP1_CI_AS");
+            migrationBuilder.DropTable(
+                name: "TerritorialObjectTypes");
         }
     }
 }

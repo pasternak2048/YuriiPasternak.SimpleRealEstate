@@ -1,5 +1,4 @@
 ﻿using YuriiPasternak.SimpleRealEstate.Domain.Common;
-using YuriiPasternak.SimpleRealEstate.Domain.Entities.Location;
 using YuriiPasternak.SimpleRealEstate.Domain.Enums;
 
 namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
@@ -16,7 +15,7 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
         public Guid Id { get; set; }
         public string Description { get; set; }
         public RealtyTypeEnum RealtyTypeId { get; set; }
-        public Guid AddressId { get; set; }
+        public Guid TerritorialObjectId { get; set; }
         public int? Floor { get; set; }
         public bool? IsFirstFloor { get; set; }
         public bool? IsLastFloor { get; set; }
@@ -28,8 +27,8 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
         public RealtyStatusEnum RealtyStatusId { get; set; } = RealtyStatusEnum.Draft;
         public bool IsDeleted { get; set; } = false;
 
+        public virtual TerritorialObject TerritorialObject { get; set; }
         public virtual RealtyType RealtyType { get; set; }
-        public virtual Address Address { get; set; }
         public virtual RealtyStatus RealtyStatus { get; set; }
         public virtual ICollection<RealtyPlanningType> RealtyPlanningTypes { get; set; }
         public virtual ICollection<RealtyHeatingType> RealtyHeatingTypes { get; set; }

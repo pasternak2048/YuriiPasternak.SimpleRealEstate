@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using YuriiPasternak.SimpleRealEstate.Domain.Entities;
-using YuriiPasternak.SimpleRealEstate.Domain.Entities.Location;
 
 namespace YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces
 {
@@ -16,12 +15,7 @@ namespace YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces
         DbSet<RealtyWallType> RealtyWallTypes { get; }
         DbSet<WallType> WallTypes { get; }
 
-        DbSet<Region> Regions { get; }
-        DbSet<District> Districts { get; }
-        DbSet<TerritorialCommunity> TerritorialCommunities { get; }
-        DbSet<City> Cities { get; }
-        DbSet<CityArea> CityAreas { get; }
-        DbSet<Street> Streets { get; }
-        DbSet<Address> Addresses { get; }
+        DbSet<TerritorialObject> TerritorialObjects { get; }
+        DbSet<TerritorialObjectType> TerritorialObjectTypes { get; }
     }
 }
