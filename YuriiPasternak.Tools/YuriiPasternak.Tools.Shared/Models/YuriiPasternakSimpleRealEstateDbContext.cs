@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace YuriiPasternak.Tools.RegionUpdater.Models;
+namespace YuriiPasternak.Tools.Shared.Models;
 
 public partial class YuriiPasternakSimpleRealEstateDbContext : DbContext
 {
@@ -15,8 +15,6 @@ public partial class YuriiPasternakSimpleRealEstateDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Address> Addresses { get; set; }
-
     public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
 
     public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
@@ -28,12 +26,6 @@ public partial class YuriiPasternakSimpleRealEstateDbContext : DbContext
     public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
 
     public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
-
-    public virtual DbSet<City> Cities { get; set; }
-
-    public virtual DbSet<CityArea> CityAreas { get; set; }
-
-    public virtual DbSet<District> Districts { get; set; }
 
     public virtual DbSet<HeatingType> HeatingTypes { get; set; }
 
@@ -51,11 +43,9 @@ public partial class YuriiPasternakSimpleRealEstateDbContext : DbContext
 
     public virtual DbSet<RealtyWallType> RealtyWallTypes { get; set; }
 
-    public virtual DbSet<Region> Regions { get; set; }
+    public virtual DbSet<TerritorialObject> TerritorialObjects { get; set; }
 
-    public virtual DbSet<Street> Streets { get; set; }
-
-    public virtual DbSet<TerritorialCommunity> TerritorialCommunities { get; set; }
+    public virtual DbSet<TerritorialObjectType> TerritorialObjectTypes { get; set; }
 
     public virtual DbSet<WallType> WallTypes { get; set; }
 
@@ -66,17 +56,6 @@ public partial class YuriiPasternakSimpleRealEstateDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
-
-        modelBuilder.Entity<Address>(entity =>
-        {
-            entity.HasIndex(e => e.StreetId, "IX_Addresses_StreetId");
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
-
-            entity.HasOne(d => d.Street).WithMany(p => p.Addresses).HasForeignKey(d => d.StreetId);
-        });
 
         modelBuilder.Entity<AspNetRole>(entity =>
         {
@@ -146,42 +125,6 @@ public partial class YuriiPasternakSimpleRealEstateDbContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.AspNetUserTokens).HasForeignKey(d => d.UserId);
         });
 
-        modelBuilder.Entity<City>(entity =>
-        {
-            entity.HasIndex(e => e.TerritorialCommunityId, "IX_Cities_TerritorialCommunityId");
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
-            entity.Property(e => e.Katottg).HasColumnName("KATOTTG");
-
-            entity.HasOne(d => d.TerritorialCommunity).WithMany(p => p.Cities).HasForeignKey(d => d.TerritorialCommunityId);
-        });
-
-        modelBuilder.Entity<CityArea>(entity =>
-        {
-            entity.HasIndex(e => e.CityId, "IX_CityAreas_CityId");
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
-            entity.Property(e => e.Katottg).HasColumnName("KATOTTG");
-
-            entity.HasOne(d => d.City).WithMany(p => p.CityAreas).HasForeignKey(d => d.CityId);
-        });
-
-        modelBuilder.Entity<District>(entity =>
-        {
-            entity.HasIndex(e => e.RegionId, "IX_Districts_RegionId");
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
-            entity.Property(e => e.Katottg).HasColumnName("KATOTTG");
-
-            entity.HasOne(d => d.Region).WithMany(p => p.Districts).HasForeignKey(d => d.RegionId);
-        });
-
         modelBuilder.Entity<HeatingType>(entity =>
         {
             entity.Property(e => e.Id)
@@ -198,8 +141,6 @@ public partial class YuriiPasternakSimpleRealEstateDbContext : DbContext
 
         modelBuilder.Entity<Realty>(entity =>
         {
-            entity.HasIndex(e => e.AddressId, "IX_Realties_AddressId");
-
             entity.HasIndex(e => e.CreatedById, "IX_Realties_CreatedById");
 
             entity.HasIndex(e => e.ModifiedById, "IX_Realties_ModifiedById");
@@ -208,11 +149,11 @@ public partial class YuriiPasternakSimpleRealEstateDbContext : DbContext
 
             entity.HasIndex(e => e.RealtyTypeId, "IX_Realties_RealtyTypeId");
 
+            entity.HasIndex(e => e.TerritorialObjectId, "IX_Realties_TerritorialObjectId");
+
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("ID");
-
-            entity.HasOne(d => d.Address).WithMany(p => p.Realties).HasForeignKey(d => d.AddressId);
 
             entity.HasOne(d => d.CreatedBy).WithMany(p => p.RealtyCreatedBies)
                 .HasForeignKey(d => d.CreatedById)
@@ -223,6 +164,8 @@ public partial class YuriiPasternakSimpleRealEstateDbContext : DbContext
             entity.HasOne(d => d.RealtyStatus).WithMany(p => p.Realties).HasForeignKey(d => d.RealtyStatusId);
 
             entity.HasOne(d => d.RealtyType).WithMany(p => p.Realties).HasForeignKey(d => d.RealtyTypeId);
+
+            entity.HasOne(d => d.TerritorialObject).WithMany(p => p.Realties).HasForeignKey(d => d.TerritorialObjectId);
         });
 
         modelBuilder.Entity<RealtyHeatingType>(entity =>
@@ -314,39 +257,27 @@ public partial class YuriiPasternakSimpleRealEstateDbContext : DbContext
             entity.HasOne(d => d.WallType).WithMany(p => p.RealtyWallTypes).HasForeignKey(d => d.WallTypeId);
         });
 
-        modelBuilder.Entity<Region>(entity =>
+        modelBuilder.Entity<TerritorialObject>(entity =>
         {
+            entity.HasIndex(e => e.TypeId, "IX_TerritorialObjects_TypeId");
+
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("ID");
+            entity.Property(e => e.CommunityKatottg).HasColumnName("CommunityKATOTTG");
+            entity.Property(e => e.DistrictKatottg).HasColumnName("DistrictKATOTTG");
             entity.Property(e => e.Katottg).HasColumnName("KATOTTG");
+            entity.Property(e => e.LocalityKatottg).HasColumnName("LocalityKATOTTG");
+            entity.Property(e => e.RegionKatottg).HasColumnName("RegionKATOTTG");
+
+            entity.HasOne(d => d.Type).WithMany(p => p.TerritorialObjects).HasForeignKey(d => d.TypeId);
         });
 
-        modelBuilder.Entity<Street>(entity =>
+        modelBuilder.Entity<TerritorialObjectType>(entity =>
         {
-            entity.HasIndex(e => e.CityAreaId, "IX_Streets_CityAreaId");
-
-            entity.HasIndex(e => e.CityId, "IX_Streets_CityId");
-
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("ID");
-
-            entity.HasOne(d => d.CityArea).WithMany(p => p.Streets).HasForeignKey(d => d.CityAreaId);
-
-            entity.HasOne(d => d.City).WithMany(p => p.Streets).HasForeignKey(d => d.CityId);
-        });
-
-        modelBuilder.Entity<TerritorialCommunity>(entity =>
-        {
-            entity.HasIndex(e => e.DistrictId, "IX_TerritorialCommunities_DistrictId");
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
-            entity.Property(e => e.Katottg).HasColumnName("KATOTTG");
-
-            entity.HasOne(d => d.District).WithMany(p => p.TerritorialCommunities).HasForeignKey(d => d.DistrictId);
         });
 
         modelBuilder.Entity<WallType>(entity =>

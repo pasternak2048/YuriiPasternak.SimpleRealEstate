@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace YuriiPasternak.Tools.RegionUpdater.Models;
+namespace YuriiPasternak.Tools.Shared.Models;
 
 public partial class Realty
 {
@@ -11,7 +11,7 @@ public partial class Realty
 
     public int RealtyTypeId { get; set; }
 
-    public Guid AddressId { get; set; }
+    public Guid TerritorialObjectId { get; set; }
 
     public int? Floor { get; set; }
 
@@ -41,8 +41,6 @@ public partial class Realty
 
     public Guid? ModifiedById { get; set; }
 
-    public virtual Address Address { get; set; } = null!;
-
     public virtual AspNetUser CreatedBy { get; set; } = null!;
 
     public virtual AspNetUser? ModifiedBy { get; set; }
@@ -56,4 +54,6 @@ public partial class Realty
     public virtual RealtyType RealtyType { get; set; } = null!;
 
     public virtual ICollection<RealtyWallType> RealtyWallTypes { get; set; } = new List<RealtyWallType>();
+
+    public virtual TerritorialObject TerritorialObject { get; set; } = null!;
 }

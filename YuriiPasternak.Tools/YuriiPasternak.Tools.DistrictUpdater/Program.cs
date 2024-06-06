@@ -1,10 +1,10 @@
 ﻿using System.Text;
+using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
-using YuriiPasternak.Tools.RegionUpdater.Models;
 using YuriiPasternak.Tools.Shared.Enums;
 using YuriiPasternak.Tools.Shared.Models;
 
-Console.WriteLine("PRESS ANY KEY FOR IMPORT REGIONS");
+Console.WriteLine("PRESS ANY KEY FOR IMPORT DISTRICTS");
 Console.ReadKey();
 
 Console.WriteLine();
@@ -31,22 +31,31 @@ var end = firstSheet.Dimension.End;
 
 for (var row = 5; row <= end.Row; row++)
 {
-    var toCodifier = GetSafeString(firstSheet.Cells[row, 1].Text);
+    var toCodifier = GetSafeString(firstSheet.Cells[row, 2].Text);
+    var toRegionCodifier = GetSafeString(firstSheet.Cells[row, 1].Text);
     var toType = GetType(firstSheet.Cells[row, 6].Text);
     var toName = GetSafeString(firstSheet.Cells[row, 7].Text);
 
     var to = new TerritorialObject();
-
-    if (toType == TerritorialObjectTypeEnum.Region)
+    if (toType == TerritorialObjectTypeEnum.District)
     {
-        to.Id = Guid.NewGuid();
-        to.Katottg = toCodifier;
-        to.TypeId = toType;
-        to.Name = toName;
+        var region = await dbContext.TerritorialObjects.FirstOrDefaultAsync(x => x.Katottg == toRegionCodifier, new CancellationToken());
+        if (region != null)
+        {
+            to.Id = Guid.NewGuid();
+            to.RegionId = region.Id;
+            to.Katottg = toCodifier;
+            to.RegionKatottg = region.Katottg;
+            to.TypeId = toType;
+            to.Name = toName;
+        }
+        
 
         dbContext.TerritorialObjects.Add(to);
         Console.WriteLine();
-        Console.Write($"ADDED:{to.Id}  ||  {to.Katottg}  ||  {to.Name}  ||  {to.TypeId}");
+        count++;
+        Console.Write($"ADDED: {count}:  ||  {to.Id}  ||  {to.Katottg}  ||  {to.Name}  ||  {to.TypeId}");
+        
     }
 }
 Console.WriteLine();

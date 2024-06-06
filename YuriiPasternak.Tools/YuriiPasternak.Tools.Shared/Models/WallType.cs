@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace YuriiPasternak.Tools.RegionUpdater.Models;
+namespace YuriiPasternak.Tools.Shared.Models;
 
 public partial class WallType
 {

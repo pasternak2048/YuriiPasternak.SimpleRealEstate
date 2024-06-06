@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace YuriiPasternak.Tools.RegionUpdater.Models;
+namespace YuriiPasternak.Tools.Shared.Models;
 
-public partial class RealtyWallType
+public partial class RealtyPlanningType
 {
     public Guid Id { get; set; }
 
     public Guid RealtyId { get; set; }
 
-    public int WallTypeId { get; set; }
+    public int PlanningTypeId { get; set; }
 
     public bool IsDeleted { get; set; }
 
@@ -25,7 +25,7 @@ public partial class RealtyWallType
 
     public virtual AspNetUser? ModifiedBy { get; set; }
 
-    public virtual Realty Realty { get; set; } = null!;
+    public virtual PlanningType PlanningType { get; set; } = null!;
 
-    public virtual WallType WallType { get; set; } = null!;
+    public virtual Realty Realty { get; set; } = null!;
 }
