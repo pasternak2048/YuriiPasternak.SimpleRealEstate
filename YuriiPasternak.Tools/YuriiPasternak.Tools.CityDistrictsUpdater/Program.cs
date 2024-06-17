@@ -1,9 +1,10 @@
 ﻿using System.Text;
+using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using YuriiPasternak.Tools.Shared.Enums;
 using YuriiPasternak.Tools.Shared.Models;
 
-Console.WriteLine("PRESS ANY KEY FOR IMPORT REGIONS");
+Console.WriteLine("PRESS ANY KEY FOR IMPORT LOCALITIES");
 Console.ReadKey();
 
 Console.WriteLine();
@@ -15,7 +16,7 @@ using (StreamWriter sw = new StreamWriter(writePath, true, Encoding.Default))
 
 }
 
-const string filePath = "TOCodifier_1901 (1).xlsx";
+const string filePath = "TOCodifier_1901 (2).xlsx";
 
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 Console.OutputEncoding = Encoding.UTF8;
@@ -30,28 +31,47 @@ var end = firstSheet.Dimension.End;
 
 for (var row = 5; row <= end.Row; row++)
 {
-    var toCodifier = GetSafeString(firstSheet.Cells[row, 1].Text);
+    var toCodifier = GetSafeString(firstSheet.Cells[row, 5].Text);
+    var toRegionCodifier = GetSafeString(firstSheet.Cells[row, 1].Text);
+    var toDistrictCodifier = GetSafeString(firstSheet.Cells[row, 2].Text);
+    var toCommunityCodifier = GetSafeString(firstSheet.Cells[row, 3].Text);
+    var toLocalityCodifier = GetSafeString(firstSheet.Cells[row, 4].Text);
     var toType = GetType(firstSheet.Cells[row, 6].Text);
     var toName = GetSafeString(firstSheet.Cells[row, 7].Text);
 
     var to = new TerritorialObject();
-
-    if (toType == TerritorialObjectTypeEnum.Region)
+    if (toType == TerritorialObjectTypeEnum.CityDistrict)
     {
+        var region = await dbContext.TerritorialObjects.FirstOrDefaultAsync(x => x.Katottg == toRegionCodifier, new CancellationToken());
+        var district = await dbContext.TerritorialObjects.FirstOrDefaultAsync(x => x.Katottg == toDistrictCodifier, new CancellationToken());
+        var community = await dbContext.TerritorialObjects.FirstOrDefaultAsync(x => x.Katottg == toCommunityCodifier, new CancellationToken());
+        var locality = await dbContext.TerritorialObjects.FirstOrDefaultAsync(x => x.Katottg == toLocalityCodifier, new CancellationToken());
+
         to.Id = Guid.NewGuid();
+        to.RegionId = region?.Id;
+        to.DistrictId = district?.Id;
+        to.CommunityId = community?.Id;
+        to.LocalityId = locality?.Id;
         to.Katottg = toCodifier;
+        to.RegionKatottg = region?.Katottg;
+        to.DistrictKatottg = district?.Katottg;
+        to.CommunityKatottg = community?.Katottg;
+        to.LocalityKatottg = locality?.Katottg;
         to.TypeId = toType;
         to.Name = toName;
 
         dbContext.TerritorialObjects.Add(to);
         Console.WriteLine();
-        Console.Write($"ADDED:{to.Id}  ||  {to.Katottg}  ||  {to.Name}  ||  {to.TypeId}");
+        count++;
+        Console.Write($"ADDED: {count}:  ||  {to.Id}  ||  {to.Katottg}  ||  {region?.Name}  ||  {district?.Name}  ||  {community?.Name}  ||  {locality?.Name}  ||  {to.Name}  ||  {to.TypeId}");
+
     }
 }
 Console.WriteLine();
 Console.WriteLine("SAVE CHANGES? Y/N");
 Console.WriteLine();
 var change = Console.ReadKey().KeyChar;
+Console.WriteLine();
 if (change == 'Y')
 {
     await dbContext.SaveChangesAsync(new CancellationToken());
