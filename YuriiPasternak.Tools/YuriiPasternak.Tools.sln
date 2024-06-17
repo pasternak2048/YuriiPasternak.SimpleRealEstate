@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34916.146
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YuriiPasternak.Tools.RegionUpdater", "YuriiPasternak.Tools.RegionUpdater\YuriiPasternak.Tools.RegionUpdater.csproj", "{FD0DFF20-EA64-486A-897D-4659010D2FC8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YuriiPasternak.Tools.DistrictUpdater", "YuriiPasternak.Tools.DistrictUpdater\YuriiPasternak.Tools.DistrictUpdater.csproj", "{3003C46E-72FC-4AB5-9F40-350035E425ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YuriiPasternak.Tools.Shared", "YuriiPasternak.Tools.Shared\YuriiPasternak.Tools.Shared.csproj", "{7E30CB8B-C7B6-423C-B4A5-10AF361BC765}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuriiPasternak.Tools.CommunityUpdater", "YuriiPasternak.Tools.CommunityUpdater\YuriiPasternak.Tools.CommunityUpdater.csproj", "{DF98B18D-50AE-4C7A-AC19-01D25C549B24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuriiPasternak.Tools.LocalityUpdater", "YuriiPasternak.Tools.LocalityUpdater\YuriiPasternak.Tools.LocalityUpdater.csproj", "{38713C92-C94C-4F7B-B66E-1ED50C3AE8F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuriiPasternak.Tools.CityDistrictsUpdater", "YuriiPasternak.Tools.CityDistrictsUpdater\YuriiPasternak.Tools.CityDistrictsUpdater.csproj", "{5164B68B-A507-4F9C-9502-49D76C4FF42A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD0DFF20-EA64-486A-897D-4659010D2FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD0DFF20-EA64-486A-897D-4659010D2FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD0DFF20-EA64-486A-897D-4659010D2FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD0DFF20-EA64-486A-897D-4659010D2FC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3003C46E-72FC-4AB5-9F40-350035E425ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3003C46E-72FC-4AB5-9F40-350035E425ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3003C46E-72FC-4AB5-9F40-350035E425ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3003C46E-72FC-4AB5-9F40-350035E425ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E30CB8B-C7B6-423C-B4A5-10AF361BC765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E30CB8B-C7B6-423C-B4A5-10AF361BC765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E30CB8B-C7B6-423C-B4A5-10AF361BC765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E30CB8B-C7B6-423C-B4A5-10AF361BC765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF98B18D-50AE-4C7A-AC19-01D25C549B24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF98B18D-50AE-4C7A-AC19-01D25C549B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF98B18D-50AE-4C7A-AC19-01D25C549B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF98B18D-50AE-4C7A-AC19-01D25C549B24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38713C92-C94C-4F7B-B66E-1ED50C3AE8F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38713C92-C94C-4F7B-B66E-1ED50C3AE8F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38713C92-C94C-4F7B-B66E-1ED50C3AE8F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38713C92-C94C-4F7B-B66E-1ED50C3AE8F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5164B68B-A507-4F9C-9502-49D76C4FF42A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5164B68B-A507-4F9C-9502-49D76C4FF42A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5164B68B-A507-4F9C-9502-49D76C4FF42A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5164B68B-A507-4F9C-9502-49D76C4FF42A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3F0DBA65-C3E2-4A82-9980-7396099DAD60}
+	EndGlobalSection
+EndGlobal
