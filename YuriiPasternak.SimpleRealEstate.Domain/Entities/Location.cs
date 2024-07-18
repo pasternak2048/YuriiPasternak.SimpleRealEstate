@@ -4,7 +4,10 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
 {
     public class Location
     {
-        public Location() { }
+        public Location() {
+            Realties = new HashSet<Realty>();
+        }
+
         public Guid Id { get; set; }
         public LocationTypeEnum LocationTypeId { get; set; }
         public string Region { get; set; } = string.Empty;
@@ -19,6 +22,7 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
         public string FlatSuffix { get; set; } = string.Empty;
 
         public virtual LocationType LocationType { get; set; } = new();
+        public virtual ICollection<Realty> Realties { get; set; }
 
     }
 }

@@ -14,7 +14,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "HeatingType",
+                name: "HeatingTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
@@ -22,11 +22,11 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HeatingType", x => x.Id);
+                    table.PrimaryKey("PK_HeatingTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "LocationType",
+                name: "LocationTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
@@ -34,11 +34,11 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LocationType", x => x.Id);
+                    table.PrimaryKey("PK_LocationTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PlanningType",
+                name: "PlanningTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
@@ -46,11 +46,11 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlanningType", x => x.Id);
+                    table.PrimaryKey("PK_PlanningTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RealtyStatus",
+                name: "RealtyStatuses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
@@ -58,11 +58,11 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RealtyStatus", x => x.Id);
+                    table.PrimaryKey("PK_RealtyStatuses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RealtyType",
+                name: "RealtyTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
@@ -70,11 +70,11 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RealtyType", x => x.Id);
+                    table.PrimaryKey("PK_RealtyTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "WallType",
+                name: "WallTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
@@ -82,11 +82,11 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WallType", x => x.Id);
+                    table.PrimaryKey("PK_WallTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Location",
+                name: "Locations",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -104,21 +104,22 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Location", x => x.Id);
+                    table.PrimaryKey("PK_Locations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Location_LocationType_LocationTypeId",
+                        name: "FK_Locations_LocationTypes_LocationTypeId",
                         column: x => x.LocationTypeId,
-                        principalTable: "LocationType",
+                        principalTable: "LocationTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Realty",
+                name: "Realties",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RealtyTypeId = table.Column<int>(type: "int", nullable: false),
+                    LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Floor = table.Column<int>(type: "int", nullable: true),
                     IsFirstFloor = table.Column<bool>(type: "bit", nullable: true),
@@ -135,28 +136,34 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Realty", x => x.Id);
+                    table.PrimaryKey("PK_Realties", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Realty_AspNetUsers_CreatedById",
+                        name: "FK_Realties_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Realty_RealtyStatus_RealtyStatusId",
-                        column: x => x.RealtyStatusId,
-                        principalTable: "RealtyStatus",
+                        name: "FK_Realties_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Realty_RealtyType_RealtyTypeId",
+                        name: "FK_Realties_RealtyStatuses_RealtyStatusId",
+                        column: x => x.RealtyStatusId,
+                        principalTable: "RealtyStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Realties_RealtyTypes_RealtyTypeId",
                         column: x => x.RealtyTypeId,
-                        principalTable: "RealtyType",
+                        principalTable: "RealtyTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RealtyHeatingType",
+                name: "RealtyHeatingTypes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -168,28 +175,28 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RealtyHeatingType", x => x.Id);
+                    table.PrimaryKey("PK_RealtyHeatingTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RealtyHeatingType_AspNetUsers_CreatedById",
+                        name: "FK_RealtyHeatingTypes_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RealtyHeatingType_HeatingType_HeatingTypeId",
+                        name: "FK_RealtyHeatingTypes_HeatingTypes_HeatingTypeId",
                         column: x => x.HeatingTypeId,
-                        principalTable: "HeatingType",
+                        principalTable: "HeatingTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RealtyHeatingType_Realty_RealtyId",
+                        name: "FK_RealtyHeatingTypes_Realties_RealtyId",
                         column: x => x.RealtyId,
-                        principalTable: "Realty",
+                        principalTable: "Realties",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RealtyPlanningType",
+                name: "RealtyPlanningTypes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -201,28 +208,28 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RealtyPlanningType", x => x.Id);
+                    table.PrimaryKey("PK_RealtyPlanningTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RealtyPlanningType_AspNetUsers_CreatedById",
+                        name: "FK_RealtyPlanningTypes_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RealtyPlanningType_PlanningType_PlanningTypeId",
+                        name: "FK_RealtyPlanningTypes_PlanningTypes_PlanningTypeId",
                         column: x => x.PlanningTypeId,
-                        principalTable: "PlanningType",
+                        principalTable: "PlanningTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RealtyPlanningType_Realty_RealtyId",
+                        name: "FK_RealtyPlanningTypes_Realties_RealtyId",
                         column: x => x.RealtyId,
-                        principalTable: "Realty",
+                        principalTable: "Realties",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RealtyWallType",
+                name: "RealtyWallTypes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -234,28 +241,28 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RealtyWallType", x => x.Id);
+                    table.PrimaryKey("PK_RealtyWallTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RealtyWallType_AspNetUsers_CreatedById",
+                        name: "FK_RealtyWallTypes_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RealtyWallType_Realty_RealtyId",
+                        name: "FK_RealtyWallTypes_Realties_RealtyId",
                         column: x => x.RealtyId,
-                        principalTable: "Realty",
+                        principalTable: "Realties",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RealtyWallType_WallType_WallTypeId",
+                        name: "FK_RealtyWallTypes_WallTypes_WallTypeId",
                         column: x => x.WallTypeId,
-                        principalTable: "WallType",
+                        principalTable: "WallTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "HeatingType",
+                table: "HeatingTypes",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -268,7 +275,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "PlanningType",
+                table: "PlanningTypes",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -281,7 +288,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "RealtyStatus",
+                table: "RealtyStatuses",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -292,7 +299,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "RealtyType",
+                table: "RealtyTypes",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -305,7 +312,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "WallType",
+                table: "WallTypes",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -316,68 +323,73 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Location_LocationTypeId",
-                table: "Location",
+                name: "IX_Locations_LocationTypeId",
+                table: "Locations",
                 column: "LocationTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Realty_CreatedById",
-                table: "Realty",
+                name: "IX_Realties_CreatedById",
+                table: "Realties",
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Realty_RealtyStatusId",
-                table: "Realty",
+                name: "IX_Realties_LocationId",
+                table: "Realties",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Realties_RealtyStatusId",
+                table: "Realties",
                 column: "RealtyStatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Realty_RealtyTypeId",
-                table: "Realty",
+                name: "IX_Realties_RealtyTypeId",
+                table: "Realties",
                 column: "RealtyTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RealtyHeatingType_CreatedById",
-                table: "RealtyHeatingType",
+                name: "IX_RealtyHeatingTypes_CreatedById",
+                table: "RealtyHeatingTypes",
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RealtyHeatingType_HeatingTypeId",
-                table: "RealtyHeatingType",
+                name: "IX_RealtyHeatingTypes_HeatingTypeId",
+                table: "RealtyHeatingTypes",
                 column: "HeatingTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RealtyHeatingType_RealtyId",
-                table: "RealtyHeatingType",
+                name: "IX_RealtyHeatingTypes_RealtyId",
+                table: "RealtyHeatingTypes",
                 column: "RealtyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RealtyPlanningType_CreatedById",
-                table: "RealtyPlanningType",
+                name: "IX_RealtyPlanningTypes_CreatedById",
+                table: "RealtyPlanningTypes",
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RealtyPlanningType_PlanningTypeId",
-                table: "RealtyPlanningType",
+                name: "IX_RealtyPlanningTypes_PlanningTypeId",
+                table: "RealtyPlanningTypes",
                 column: "PlanningTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RealtyPlanningType_RealtyId",
-                table: "RealtyPlanningType",
+                name: "IX_RealtyPlanningTypes_RealtyId",
+                table: "RealtyPlanningTypes",
                 column: "RealtyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RealtyWallType_CreatedById",
-                table: "RealtyWallType",
+                name: "IX_RealtyWallTypes_CreatedById",
+                table: "RealtyWallTypes",
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RealtyWallType_RealtyId",
-                table: "RealtyWallType",
+                name: "IX_RealtyWallTypes_RealtyId",
+                table: "RealtyWallTypes",
                 column: "RealtyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RealtyWallType_WallTypeId",
-                table: "RealtyWallType",
+                name: "IX_RealtyWallTypes_WallTypeId",
+                table: "RealtyWallTypes",
                 column: "WallTypeId");
         }
 
@@ -385,37 +397,37 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Location");
+                name: "RealtyHeatingTypes");
 
             migrationBuilder.DropTable(
-                name: "RealtyHeatingType");
+                name: "RealtyPlanningTypes");
 
             migrationBuilder.DropTable(
-                name: "RealtyPlanningType");
+                name: "RealtyWallTypes");
 
             migrationBuilder.DropTable(
-                name: "RealtyWallType");
+                name: "HeatingTypes");
 
             migrationBuilder.DropTable(
-                name: "LocationType");
+                name: "PlanningTypes");
 
             migrationBuilder.DropTable(
-                name: "HeatingType");
+                name: "Realties");
 
             migrationBuilder.DropTable(
-                name: "PlanningType");
+                name: "WallTypes");
 
             migrationBuilder.DropTable(
-                name: "Realty");
+                name: "Locations");
 
             migrationBuilder.DropTable(
-                name: "WallType");
+                name: "RealtyStatuses");
 
             migrationBuilder.DropTable(
-                name: "RealtyStatus");
+                name: "RealtyTypes");
 
             migrationBuilder.DropTable(
-                name: "RealtyType");
+                name: "LocationTypes");
         }
     }
 }

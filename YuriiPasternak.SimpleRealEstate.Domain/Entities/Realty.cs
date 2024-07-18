@@ -14,6 +14,7 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
 
         public Guid Id { get; set; }
         public RealtyTypeEnum RealtyTypeId { get; set; }
+        public Guid LocationId { get; set; }
 
         public string Description { get; set; } = string.Empty;
         public int? Floor { get; set; }
@@ -33,6 +34,7 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
         public virtual AppUser Creator { get; set; } = new();
         public virtual RealtyType RealtyType { get; set; } = new();
         public virtual RealtyStatus RealtyStatus { get; set; } = new();
+        public virtual Location Location { get; set; } = new();
         public virtual ICollection<RealtyPlanningType> RealtyPlanningTypes { get; set; }
         public virtual ICollection<RealtyHeatingType> RealtyHeatingTypes { get; set; }
         public virtual ICollection<RealtyWallType> RealtyWallTypes { get; set; }
