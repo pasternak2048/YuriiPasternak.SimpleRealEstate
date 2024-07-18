@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\YuriiPasternak.SimpleRealEstate.Domain\YuriiPasternak.SimpleRealEstate.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

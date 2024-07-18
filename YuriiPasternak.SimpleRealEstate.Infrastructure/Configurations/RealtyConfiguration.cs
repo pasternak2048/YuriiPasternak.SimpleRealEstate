@@ -24,6 +24,10 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Configurations
             builder.HasOne(e => e.RealtyType)
                .WithMany(p => p.Realties)
                .HasForeignKey(e => e.RealtyTypeId);
+
+            builder.HasOne(e => e.Location)
+                .WithMany(p => p.Realties)
+                .HasForeignKey(e => e.LocationId);
         }
     }
 }

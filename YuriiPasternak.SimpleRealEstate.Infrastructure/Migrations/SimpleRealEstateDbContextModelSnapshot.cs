@@ -137,7 +137,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HeatingType");
+                    b.ToTable("HeatingTypes");
 
                     b.HasData(
                         new
@@ -223,7 +223,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasIndex("LocationTypeId");
 
-                    b.ToTable("Location");
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.LocationType", b =>
@@ -237,7 +237,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LocationType");
+                    b.ToTable("LocationTypes");
                 });
 
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.PlanningType", b =>
@@ -251,7 +251,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PlanningType");
+                    b.ToTable("PlanningTypes");
 
                     b.HasData(
                         new
@@ -328,6 +328,9 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     b.Property<bool?>("IsLastFloor")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("LocationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("RealtyStatusId")
                         .HasColumnType("int");
 
@@ -341,11 +344,13 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasIndex("CreatedById");
 
+                    b.HasIndex("LocationId");
+
                     b.HasIndex("RealtyStatusId");
 
                     b.HasIndex("RealtyTypeId");
 
-                    b.ToTable("Realty");
+                    b.ToTable("Realties");
                 });
 
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.RealtyHeatingType", b =>
@@ -379,7 +384,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasIndex("RealtyId");
 
-                    b.ToTable("RealtyHeatingType");
+                    b.ToTable("RealtyHeatingTypes");
                 });
 
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.RealtyPlanningType", b =>
@@ -413,7 +418,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasIndex("RealtyId");
 
-                    b.ToTable("RealtyPlanningType");
+                    b.ToTable("RealtyPlanningTypes");
                 });
 
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.RealtyStatus", b =>
@@ -427,7 +432,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RealtyStatus");
+                    b.ToTable("RealtyStatuses");
 
                     b.HasData(
                         new
@@ -463,7 +468,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RealtyType");
+                    b.ToTable("RealtyTypes");
 
                     b.HasData(
                         new
@@ -529,7 +534,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasIndex("WallTypeId");
 
-                    b.ToTable("RealtyWallType");
+                    b.ToTable("RealtyWallTypes");
                 });
 
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.WallType", b =>
@@ -543,7 +548,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WallType");
+                    b.ToTable("WallTypes");
 
                     b.HasData(
                         new
@@ -738,6 +743,12 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.Location", "Location")
+                        .WithMany("Realties")
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.RealtyStatus", "RealtyStatus")
                         .WithMany("Realties")
                         .HasForeignKey("RealtyStatusId")
@@ -751,6 +762,8 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Creator");
+
+                    b.Navigation("Location");
 
                     b.Navigation("RealtyStatus");
 
@@ -841,6 +854,11 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.HeatingType", b =>
                 {
                     b.Navigation("RealtyHeatingTypes");
+                });
+
+            modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.Location", b =>
+                {
+                    b.Navigation("Realties");
                 });
 
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.LocationType", b =>
