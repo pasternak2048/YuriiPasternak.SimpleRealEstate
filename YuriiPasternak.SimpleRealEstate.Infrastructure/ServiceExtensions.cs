@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,8 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<SimpleRealEstateDbContext>(opt => opt.UseSqlServer(connectionString));
 
+            services.AddScoped<ISimpleRealEstateDbContext>(provider => provider.GetService<SimpleRealEstateDbContext>());
+
             services.AddIdentityCore<AppUser>()
                 .AddRoles<AppRole>()
                 .AddRoleManager<RoleManager<AppRole>>()
@@ -40,6 +43,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure
 
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddSingleton<ICurrentUserInitializer, CurrentUserInitializer>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHttpContextAccessor();
         }
     }

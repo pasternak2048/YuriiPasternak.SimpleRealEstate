@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 using System.Text.Json;
+using YuriiPasternak.SimpleRealEstate.Application.Common.Exceptions;
 
 namespace YuriiPasternak.SimpleRealEstate.WebAPI.Extensions
 {
@@ -22,7 +23,14 @@ namespace YuriiPasternak.SimpleRealEstate.WebAPI.Extensions
 
                     switch (contextFeature.Error)
                     {
-                        
+                        case BadRequestException:
+                            {
+                                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                                var exception = (BadRequestException)contextFeature.Error;
+                                errorDetails = exception.Errors;
+                                break;
+                            }
+
                         case UnauthorizedAccessException:
                             {
                                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;

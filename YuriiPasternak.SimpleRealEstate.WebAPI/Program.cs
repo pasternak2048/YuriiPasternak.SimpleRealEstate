@@ -15,10 +15,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureSwaggerServices();
 builder.Services.ConfigureCorsPolicy();
-builder.Services.ConfigureApplication(); 
+builder.Services.ConfigureApplication();
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 var app = builder.Build();
 
