@@ -13,8 +13,8 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
         public DateTimeOffset CreatedAt { get; set; }
         public Guid CreatedById { get; set; }
 
-        public virtual AppUser Creator { get; set; } = new();
-        public virtual Realty Realty { get; set; } = new();
-        public virtual PlanningType PlanningType { get; set; } = new();
+        public virtual AppUser Creator { get; set; }
+        public virtual Realty Realty { get; set; }
+        public virtual PlanningType PlanningType { get; set; }
     }
 }

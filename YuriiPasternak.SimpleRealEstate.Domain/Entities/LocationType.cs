@@ -8,7 +8,7 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
             Locations = new HashSet<Location>();
         }
         public LocationTypeEnum Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; }
 
         public virtual ICollection<Location> Locations { get; set; }
     }

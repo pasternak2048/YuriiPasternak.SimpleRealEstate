@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using YuriiPasternak.SimpleRealEstate.Domain.Entities;
+using YuriiPasternak.SimpleRealEstate.Domain.Enums;
 using YuriiPasternak.SimpleRealEstate.Domain.Identity;
 using YuriiPasternak.SimpleRealEstate.Infrastructure.Context;
 
@@ -95,6 +97,33 @@ namespace YuriiPasternak.SimpleRealEstate.WebAPI.Controllers
                 //add this to add role to user
                 await _userManager.AddToRoleAsync(user3, "Client");
             }
+
+            return Ok();
+        }
+
+        [HttpPost("SeedLocation")]
+        public async Task<IActionResult> SeedLocation(CancellationToken cancellationToken)
+        {
+            var location = new Location()
+            {
+                Id = Guid.Parse("d29d1388-85b1-4bfa-8b83-14241e6700b2"),
+                Region = "Lvivskiy",
+                District = "Lvivskiy",
+                Community = "Lvivska",
+                Locality = "Lviv",
+                LocalityDistrict = "Lychakivskiy",
+                Street = "Kravchuka",
+                BuildingNumber =4,
+                Block = string.Empty,
+                FlatNumber = 1,
+                FlatSuffix = "A",
+                LocationTypeId = LocationTypeEnum.City
+            };
+
+
+
+            _dataContext.Locations.Add(location);
+            await _dataContext.SaveChangesAsync(cancellationToken);
 
             return Ok();
         }

@@ -5,10 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces;
 using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces.Authentication;
 using YuriiPasternak.SimpleRealEstate.Domain.Identity;
 using YuriiPasternak.SimpleRealEstate.Infrastructure.Authentication;
 using YuriiPasternak.SimpleRealEstate.Infrastructure.Context;
+using YuriiPasternak.SimpleRealEstate.Infrastructure.Services;
 
 namespace YuriiPasternak.SimpleRealEstate.Infrastructure
 {
@@ -37,6 +39,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure
                 });
 
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            services.AddSingleton<ICurrentUserInitializer, CurrentUserInitializer>();
             services.AddHttpContextAccessor();
         }
     }

@@ -18,7 +18,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,7 +30,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,7 +42,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -54,7 +54,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,7 +66,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -78,7 +78,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,16 +91,16 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LocationTypeId = table.Column<int>(type: "int", nullable: false),
-                    Region = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    District = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Community = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Locality = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LocalityDistrict = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Region = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Community = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Locality = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LocalityDistrict = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BuildingNumber = table.Column<int>(type: "int", nullable: true),
-                    Block = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Block = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FlatNumber = table.Column<int>(type: "int", nullable: true),
-                    FlatSuffix = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FlatSuffix = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -120,7 +120,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RealtyTypeId = table.Column<int>(type: "int", nullable: false),
                     LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Floor = table.Column<int>(type: "int", nullable: true),
                     IsFirstFloor = table.Column<bool>(type: "bit", nullable: true),
                     IsLastFloor = table.Column<bool>(type: "bit", nullable: true),
@@ -272,6 +272,21 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     { 3, "SolidFuel" },
                     { 4, "Solar" },
                     { 5, "Geothermal" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "LocationTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 0, "None" },
+                    { 1, "Region" },
+                    { 2, "District" },
+                    { 3, "Community" },
+                    { 4, "City" },
+                    { 5, "CityDistrict" },
+                    { 6, "Village" },
+                    { 7, "SmallTown" }
                 });
 
             migrationBuilder.InsertData(

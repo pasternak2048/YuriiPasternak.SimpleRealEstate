@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace YuriiPasternak.SimpleRealEstate.Domain.Enums
+﻿namespace YuriiPasternak.SimpleRealEstate.Domain.Enums
 {
     public enum LocationTypeEnum : int
     {

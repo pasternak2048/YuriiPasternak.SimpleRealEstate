@@ -15,6 +15,8 @@ namespace YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces
         DbSet<RealtyStatus> RealtyStatuses { get; }
         DbSet<RealtyType> RealtyTypes { get; }
         DbSet<RealtyWallType> RealtyWallTypes { get; }
-        DbSet<WallType> WallTypes { get; } 
+        DbSet<WallType> WallTypes { get; }
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

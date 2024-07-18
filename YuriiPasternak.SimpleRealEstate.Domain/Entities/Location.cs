@@ -10,18 +10,18 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
 
         public Guid Id { get; set; }
         public LocationTypeEnum LocationTypeId { get; set; }
-        public string Region { get; set; } = string.Empty;
-        public string District { get; set; } = string.Empty;
-        public string Community { get; set; } = string.Empty;
-        public string Locality { get; set; } = string.Empty;
-        public string LocalityDistrict { get; set; } = string.Empty;
-        public string Street { get; set; } = string.Empty;
+        public string? Region { get; set; }
+        public string? District { get; set; }
+        public string? Community { get; set; }
+        public string? Locality { get; set; }
+        public string? LocalityDistrict { get; set; }
+        public string? Street { get; set; }
         public int? BuildingNumber { get; set; }
-        public string Block { get; set; } = string.Empty;
+        public string? Block { get; set; }
         public int? FlatNumber { get; set; }
-        public string FlatSuffix { get; set; } = string.Empty;
+        public string? FlatSuffix { get; set; }
 
-        public virtual LocationType LocationType { get; set; } = new();
+        public virtual LocationType LocationType { get; set; }
         public virtual ICollection<Realty> Realties { get; set; }
 
     }
