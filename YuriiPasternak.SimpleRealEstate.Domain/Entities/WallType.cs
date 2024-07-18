@@ -9,7 +9,7 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
             RealtyWallTypes = new HashSet<RealtyWallType>();
         }
         public WallTypeEnum Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; }
 
         public virtual ICollection<RealtyWallType> RealtyWallTypes { get; set; }
     }

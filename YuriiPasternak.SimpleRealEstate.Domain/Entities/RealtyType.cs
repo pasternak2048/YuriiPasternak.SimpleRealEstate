@@ -10,7 +10,7 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
         }
 
         public RealtyTypeEnum Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; }
 
         public virtual ICollection<Realty> Realties { get; set; }
     }

@@ -132,7 +132,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -179,44 +178,36 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Block")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("BuildingNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("Community")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("District")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("FlatNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("FlatSuffix")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Locality")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocalityDistrict")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LocationTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Region")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Street")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -232,12 +223,53 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("LocationTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 0,
+                            Name = "None"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Name = "Region"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "District"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Community"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "City"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "CityDistrict"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Village"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "SmallTown"
+                        });
                 });
 
             modelBuilder.Entity("YuriiPasternak.SimpleRealEstate.Domain.Entities.PlanningType", b =>
@@ -246,7 +278,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -308,7 +339,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Floor")
@@ -427,7 +457,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -463,7 +492,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -543,7 +571,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
