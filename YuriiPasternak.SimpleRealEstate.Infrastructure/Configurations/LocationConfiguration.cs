@@ -12,7 +12,8 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Configurations
 
             builder.HasOne(e => e.LocationType)
                 .WithMany(p => p.Locations)
-                .HasForeignKey(e => e.LocationTypeId);
+                .HasForeignKey(e => e.LocationTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

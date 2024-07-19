@@ -17,15 +17,18 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Configurations
 
             builder.HasOne(e => e.RealtyStatus)
                 .WithMany(p => p.Realties)
-                .HasForeignKey(e => e.RealtyStatusId);
+                .HasForeignKey(e => e.RealtyStatusId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(e => e.RealtyType)
                .WithMany(p => p.Realties)
-               .HasForeignKey(e => e.RealtyTypeId);
+               .HasForeignKey(e => e.RealtyTypeId)
+               .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(e => e.Location)
                 .WithMany(p => p.Realties)
-                .HasForeignKey(e => e.LocationId);
+                .HasForeignKey(e => e.LocationId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

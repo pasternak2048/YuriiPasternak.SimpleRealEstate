@@ -6,8 +6,8 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
     public class RealtyHeatingType
     {
         public Guid Id { get; set; }
-        public Guid RealtyId { get; set; }
-        public HeatingTypeEnum HeatingTypeId { get; set; }
+        public Guid? RealtyId { get; set; }
+        public HeatingTypeEnum? HeatingTypeId { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }
         public Guid CreatedById { get; set; }
