@@ -26,7 +26,6 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
         public int? BathCount { get; set; }
         public DateTimeOffset? BuildDate { get; set; }
         public RealtyStatusEnum RealtyStatusId { get; set; }
-        public bool IsDeleted { get; set; } = false;
 
         public DateTimeOffset CreatedAt { get; set; }
         public Guid CreatedById { get; set; }

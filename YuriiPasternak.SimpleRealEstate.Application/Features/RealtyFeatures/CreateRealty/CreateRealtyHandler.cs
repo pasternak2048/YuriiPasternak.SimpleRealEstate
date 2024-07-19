@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
+using YuriiPasternak.SimpleRealEstate.Application.Common.Exceptions;
 using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces;
 using YuriiPasternak.SimpleRealEstate.Domain.Entities;
 
 namespace YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.CreateRealty
 {
-    public class CreateRealtyHandler : IRequestHandler<CreateRealtyRequest, CreateRealtyResponse>
+    public class CreateRealtyHandler : IRequestHandler<CreateRealtyRequest, Guid>
     {
         private readonly ISimpleRealEstateDbContext _context;
         private readonly ICurrentUserInitializer _currentUserInitializer;
@@ -19,7 +20,7 @@ namespace YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.Cr
             _mapper = mapper;
         }
 
-        public async Task<CreateRealtyResponse> Handle(CreateRealtyRequest request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateRealtyRequest request, CancellationToken cancellationToken)
         {
             var currentUserId = _currentUserInitializer.UserId;
             var currentUserRole = _currentUserInitializer.UserRole;
@@ -31,17 +32,23 @@ namespace YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.Cr
 
             var realty = _mapper.Map<Realty>(request);
 
-            realty.LocationId = Guid.Parse("D29D1388-85B1-4BFA-8B83-14241E6700B2"); //Mock location
-
             realty.CreatedById = currentUserId.Value;
 
             realty.CreatedAt = DateTimeOffset.UtcNow;
 
             await _context.Realties.AddAsync(realty);
 
-            await _context.SaveChangesAsync(cancellationToken);
+            try
+            {
 
-            return _mapper.Map<CreateRealtyResponse>(realty);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch
+            {
+                throw new SaveChangesFailedException("Data save failed.");
+            }
+
+            return realty.Id;
         }
     }
 }

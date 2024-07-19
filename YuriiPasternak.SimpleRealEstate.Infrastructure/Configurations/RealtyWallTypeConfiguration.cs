@@ -10,8 +10,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Configurations
         {
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.IsDeleted).HasDefaultValue(false);
-
             builder.HasOne(e => e.Creator)
                 .WithMany(p => p.RealtyWallTypes)
                 .HasForeignKey(e => e.CreatedById)

@@ -8,7 +8,6 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
         public Guid Id { get; set; }
         public Guid RealtyId { get; set; }
         public WallTypeEnum WallTypeId { get; set; }
-        public bool IsDeleted { get; set; } = false;
 
         public DateTimeOffset CreatedAt { get; set; }
         public Guid CreatedById { get; set; }

@@ -3,7 +3,7 @@ using YuriiPasternak.SimpleRealEstate.Domain.Enums;
 
 namespace YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.CreateRealty
 {
-    public class CreateRealtyRequest : IRequest<CreateRealtyResponse>
+    public class CreateRealtyRequest : IRequest<Guid>
     {
         public string Description { get; set; } = string.Empty;
         public RealtyTypeEnum RealtyTypeId { get; set; }
