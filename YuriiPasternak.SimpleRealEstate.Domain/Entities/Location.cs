@@ -9,7 +9,7 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
         }
 
         public Guid Id { get; set; }
-        public LocationTypeEnum LocationTypeId { get; set; }
+        public LocationTypeEnum? LocationTypeId { get; set; }
         public string? Region { get; set; }
         public string? District { get; set; }
         public string? Community { get; set; }

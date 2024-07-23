@@ -9,8 +9,6 @@ namespace YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.Cr
         {
             CreateMap<CreateRealtyRequest, Realty>();
 
-            CreateMap<Realty, CreateRealtyResponse>();
-
             CreateMap<int, RealtyPlanningType>()
                 .ForMember(dest => dest.PlanningTypeId, opts => opts.MapFrom(y => y));
 

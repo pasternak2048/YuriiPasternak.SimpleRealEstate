@@ -12,7 +12,7 @@ using YuriiPasternak.SimpleRealEstate.Infrastructure.Context;
 namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 {
     [DbContext(typeof(SimpleRealEstateDbContext))]
-    [Migration("20240718172859_AddedEntities")]
+    [Migration("20240719132406_AddedEntities")]
     partial class AddedEntities
     {
         /// <inheritdoc />
@@ -204,7 +204,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     b.Property<string>("LocalityDistrict")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LocationTypeId")
+                    b.Property<int?>("LocationTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Region")
@@ -350,24 +350,19 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     b.Property<int?>("FloorCount")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<bool?>("IsFirstFloor")
                         .HasColumnType("bit");
 
                     b.Property<bool?>("IsLastFloor")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("LocationId")
+                    b.Property<Guid?>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RealtyStatusId")
+                    b.Property<int?>("RealtyStatusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RealtyTypeId")
+                    b.Property<int?>("RealtyTypeId")
                         .HasColumnType("int");
 
                     b.Property<int?>("RoomCount")
@@ -398,15 +393,10 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     b.Property<Guid>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("HeatingTypeId")
+                    b.Property<int?>("HeatingTypeId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<Guid>("RealtyId")
+                    b.Property<Guid?>("RealtyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -432,15 +422,10 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     b.Property<Guid>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<int>("PlanningTypeId")
+                    b.Property<int?>("PlanningTypeId")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("RealtyId")
+                    b.Property<Guid?>("RealtyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -546,15 +531,10 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     b.Property<Guid>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<Guid>("RealtyId")
+                    b.Property<Guid?>("RealtyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("WallTypeId")
+                    b.Property<int?>("WallTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -758,9 +738,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 {
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.LocationType", "LocationType")
                         .WithMany("Locations")
-                        .HasForeignKey("LocationTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationTypeId");
 
                     b.Navigation("LocationType");
                 });
@@ -775,21 +753,15 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.Location", "Location")
                         .WithMany("Realties")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.RealtyStatus", "RealtyStatus")
                         .WithMany("Realties")
-                        .HasForeignKey("RealtyStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RealtyStatusId");
 
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.RealtyType", "RealtyType")
                         .WithMany("Realties")
-                        .HasForeignKey("RealtyTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RealtyTypeId");
 
                     b.Navigation("Creator");
 
@@ -810,15 +782,11 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.HeatingType", "HeatingType")
                         .WithMany("RealtyHeatingTypes")
-                        .HasForeignKey("HeatingTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HeatingTypeId");
 
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.Realty", "Realty")
                         .WithMany("RealtyHeatingTypes")
-                        .HasForeignKey("RealtyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RealtyId");
 
                     b.Navigation("Creator");
 
@@ -837,15 +805,11 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.PlanningType", "PlanningType")
                         .WithMany("RealtyPlanningTypes")
-                        .HasForeignKey("PlanningTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PlanningTypeId");
 
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.Realty", "Realty")
                         .WithMany("RealtyPlanningTypes")
-                        .HasForeignKey("RealtyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RealtyId");
 
                     b.Navigation("Creator");
 
@@ -864,15 +828,11 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
 
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.Realty", "Realty")
                         .WithMany("RealtyWallTypes")
-                        .HasForeignKey("RealtyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RealtyId");
 
                     b.HasOne("YuriiPasternak.SimpleRealEstate.Domain.Entities.WallType", "WallType")
                         .WithMany("RealtyWallTypes")
-                        .HasForeignKey("WallTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WallTypeId");
 
                     b.Navigation("Creator");
 

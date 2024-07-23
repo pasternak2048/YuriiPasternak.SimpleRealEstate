@@ -90,7 +90,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LocationTypeId = table.Column<int>(type: "int", nullable: false),
+                    LocationTypeId = table.Column<int>(type: "int", nullable: true),
                     Region = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     District = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Community = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -109,8 +109,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         name: "FK_Locations_LocationTypes_LocationTypeId",
                         column: x => x.LocationTypeId,
                         principalTable: "LocationTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -118,8 +117,8 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RealtyTypeId = table.Column<int>(type: "int", nullable: false),
-                    LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RealtyTypeId = table.Column<int>(type: "int", nullable: true),
+                    LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Floor = table.Column<int>(type: "int", nullable: true),
                     IsFirstFloor = table.Column<bool>(type: "bit", nullable: true),
@@ -129,8 +128,7 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                     RoomCount = table.Column<int>(type: "int", nullable: true),
                     BathCount = table.Column<int>(type: "int", nullable: true),
                     BuildDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    RealtyStatusId = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    RealtyStatusId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -146,20 +144,17 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         name: "FK_Realties_Locations_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Locations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Realties_RealtyStatuses_RealtyStatusId",
                         column: x => x.RealtyStatusId,
                         principalTable: "RealtyStatuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Realties_RealtyTypes_RealtyTypeId",
                         column: x => x.RealtyTypeId,
                         principalTable: "RealtyTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -167,9 +162,8 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RealtyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    HeatingTypeId = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    RealtyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    HeatingTypeId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -185,14 +179,12 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         name: "FK_RealtyHeatingTypes_HeatingTypes_HeatingTypeId",
                         column: x => x.HeatingTypeId,
                         principalTable: "HeatingTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RealtyHeatingTypes_Realties_RealtyId",
                         column: x => x.RealtyId,
                         principalTable: "Realties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -200,9 +192,8 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RealtyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PlanningTypeId = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    RealtyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PlanningTypeId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -218,14 +209,12 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         name: "FK_RealtyPlanningTypes_PlanningTypes_PlanningTypeId",
                         column: x => x.PlanningTypeId,
                         principalTable: "PlanningTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RealtyPlanningTypes_Realties_RealtyId",
                         column: x => x.RealtyId,
                         principalTable: "Realties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -233,9 +222,8 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RealtyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    WallTypeId = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    RealtyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    WallTypeId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -251,14 +239,12 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Migrations
                         name: "FK_RealtyWallTypes_Realties_RealtyId",
                         column: x => x.RealtyId,
                         principalTable: "Realties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RealtyWallTypes_WallTypes_WallTypeId",
                         column: x => x.WallTypeId,
                         principalTable: "WallTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(

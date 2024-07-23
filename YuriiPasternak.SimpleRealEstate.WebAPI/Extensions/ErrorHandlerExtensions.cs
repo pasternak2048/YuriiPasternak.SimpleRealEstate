@@ -46,6 +46,13 @@ namespace YuriiPasternak.SimpleRealEstate.WebAPI.Extensions
                                 break;
                             }
 
+                        case SaveChangesFailedException:
+                            {
+                                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                                errorDetails = null;
+                                break;
+                            }
+
                         default:
                             {
                                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

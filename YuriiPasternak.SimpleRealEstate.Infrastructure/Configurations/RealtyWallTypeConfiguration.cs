@@ -10,8 +10,6 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Configurations
         {
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.IsDeleted).HasDefaultValue(false);
-
             builder.HasOne(e => e.Creator)
                 .WithMany(p => p.RealtyWallTypes)
                 .HasForeignKey(e => e.CreatedById)
@@ -19,11 +17,13 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure.Configurations
 
             builder.HasOne(e => e.Realty)
                 .WithMany(p => p.RealtyWallTypes)
-                .HasForeignKey(e => e.RealtyId);
+                .HasForeignKey(e => e.RealtyId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(e => e.WallType)
                 .WithMany(p => p.RealtyWallTypes)
-                .HasForeignKey(e => e.WallTypeId);
+                .HasForeignKey(e => e.WallTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

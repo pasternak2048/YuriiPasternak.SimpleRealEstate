@@ -6,9 +6,8 @@ namespace YuriiPasternak.SimpleRealEstate.Domain.Entities
     public class RealtyPlanningType
     {
         public Guid Id { get; set; }
-        public Guid RealtyId { get; set; }
-        public PlanningTypeEnum PlanningTypeId { get; set; }
-        public bool IsDeleted { get; set; } = false;
+        public Guid? RealtyId { get; set; }
+        public PlanningTypeEnum? PlanningTypeId { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }
         public Guid CreatedById { get; set; }
