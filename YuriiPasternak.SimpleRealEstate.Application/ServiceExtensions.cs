@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using YuriiPasternak.SimpleRealEstate.Application.Common.Behaviors;
 using YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.CreateRealty;
+using YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.UpdateRealty;
 
 
 namespace YuriiPasternak.SimpleRealEstate.Application
@@ -16,6 +17,7 @@ namespace YuriiPasternak.SimpleRealEstate.Application
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddScoped<IValidator<CreateRealtyRequest>, CreateRealtyValidator>();
+            services.AddScoped<IValidator<UpdateRealtyRequest>, UpdateRealtyValidator>();
         }
     }
 }
