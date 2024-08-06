@@ -23,52 +23,75 @@ namespace YuriiPasternak.SimpleRealEstate.WebAPI.Extensions
 
                     switch (contextFeature.Error)
                     {
+                        case NotFoundException:
+                            {
+                                var errorResponse = new
+                                {
+                                    statusCode = context.Response.StatusCode,
+                                    message = contextFeature.Error.GetBaseException().Message,
+                                };
+                                await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
+                                break;
+                            }
                         case BadRequestException:
                             {
-                                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                                 var exception = (BadRequestException)contextFeature.Error;
-                                errorDetails = exception.Errors;
+                                var errorResponse = new
+                                {
+                                    statusCode = context.Response.StatusCode,
+                                    message = contextFeature.Error.GetBaseException().Message,
+                                    errorDetails = exception.Errors
+                                };
+                                await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
                                 break;
                             }
 
                         case UnauthorizedAccessException:
                             {
-                                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                                errorDetails = null;
+                                var errorResponse = new
+                                {
+                                    statusCode = context.Response.StatusCode,
+                                    message = contextFeature.Error.GetBaseException().Message,
+                                };
+                                await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
                                 break;
                             }
 
 
                         case OperationCanceledException:
                             {
-                                context.Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
-                                errorDetails = null;
+                                var errorResponse = new
+                                {
+                                    statusCode = context.Response.StatusCode,
+                                    message = contextFeature.Error.GetBaseException().Message,
+                                };
+                                await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
                                 break;
                             }
 
                         case SaveChangesFailedException:
                             {
-                                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                                errorDetails = null;
+                                var errorResponse = new
+                                {
+                                    statusCode = context.Response.StatusCode,
+                                    message = contextFeature.Error.GetBaseException().Message,
+                                };
+                                await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
                                 break;
                             }
 
                         default:
                             {
-                                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                                errorDetails = null;
+                                var errorResponse = new
+                                {
+                                    statusCode = context.Response.StatusCode,
+                                    message = contextFeature.Error.GetBaseException().Message,
+                                };
+
+                                await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
                                 break;
                             }
                     }
-
-                    var errorResponse = new
-                    {
-                        statusCode = context.Response.StatusCode,
-                        message = contextFeature.Error.GetBaseException().Message,
-                        errorDetails = errorDetails
-                    };
-
-                    await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
                 });
             });
         }
