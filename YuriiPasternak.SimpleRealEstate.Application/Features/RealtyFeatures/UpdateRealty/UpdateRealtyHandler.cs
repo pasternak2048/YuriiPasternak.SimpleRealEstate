@@ -46,9 +46,9 @@ namespace YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.Up
                 
                 await _context.SaveChangesAsync(cancellationToken);
             }
-            catch 
+            catch (Exception exc)
             {
-                throw new SaveChangesFailedException("Data save failed.");
+                throw new SaveChangesFailedException($"Data save failed. {exc.Message}");
             }
 
             return request.Id;
