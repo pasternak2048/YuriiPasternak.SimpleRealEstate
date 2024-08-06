@@ -5,6 +5,7 @@ using YuriiPasternak.SimpleRealEstate.Application.Common.Models.Pagination;
 using YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.CreateRealty;
 using YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.DeleteRealty;
 using YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.GetRealties;
+using YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.GetRealty;
 using YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.UpdateRealty;
 using static YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.UpdateRealty.UpdateRealtyRequest;
 
@@ -38,6 +39,14 @@ namespace YuriiPasternak.SimpleRealEstate.WebAPI.Controllers
         public async Task<ActionResult<Guid>> Delete (Guid id, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(new DeleteRealtyRequest() { Id = id }, cancellationToken);
+            return Ok(response);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<GetRealtyResponse>> GetRealty(Guid id, CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(new GetRealtyRequest() { Id = id }, cancellationToken);
             return Ok(response);
         }
 
