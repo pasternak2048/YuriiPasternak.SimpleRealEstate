@@ -8,7 +8,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.GetRealties
 {
-    public class GetRealtiesHandler : IRequestHandler<GetRealtiesRequest, PagedList<GetRealtiesResponse>>
+    public class GetRealtiesHandler : IRequestHandler<GetRealtiesRequest, List<GetRealtiesResponse>>
     {
         private readonly ISimpleRealEstateDbContext _context;
         private readonly ICurrentUserInitializer _currentUserInitializer;
@@ -21,15 +21,14 @@ namespace YuriiPasternak.SimpleRealEstate.Application.Features.RealtyFeatures.Ge
             _mapper = mapper;
         }
 
-        public async Task<PagedList<GetRealtiesResponse>> Handle(GetRealtiesRequest request, CancellationToken cancellationToken)
+        public virtual async Task<List<GetRealtiesResponse>> Handle(GetRealtiesRequest request, CancellationToken cancellationToken)
         {
-            var realtiesQueryable = _context.Realties.AsQueryable();
+            var realties = await _context.Realties
+                .Skip((request.UserParams.PageNumber - 1) * request.UserParams.PageSize)
+                .Take(request.UserParams.PageSize)
+                .ToListAsync(cancellationToken);
 
-            var realtiesResult = await PagedList<GetRealtiesResponse>
-                .CreateAsync(realtiesQueryable.ProjectTo<GetRealtiesResponse>(_mapper.ConfigurationProvider)
-                .AsNoTracking(),
-                request.UserParams.PageNumber,
-                request.UserParams.PageSize);
+            var realtiesResult = _mapper.Map<List<GetRealtiesResponse>>(realties);
 
             return realtiesResult;
         }

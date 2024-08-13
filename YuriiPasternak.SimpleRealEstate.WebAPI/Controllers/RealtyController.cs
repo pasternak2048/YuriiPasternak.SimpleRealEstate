@@ -52,7 +52,7 @@ namespace YuriiPasternak.SimpleRealEstate.WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpGet("Realties")]
-        public async Task<ActionResult<PagedList<GetRealtiesResponse>>> GetRealties([FromQuery]GetRealtiesRequest request, CancellationToken cancellationToken)
+        public async Task<ActionResult<List<GetRealtiesResponse>>> GetRealties([FromQuery]GetRealtiesRequest request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
             return Ok(response);

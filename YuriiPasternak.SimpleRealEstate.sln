@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuriiPasternak.SimpleRealEstate.WebAPI", "YuriiPasternak.SimpleRealEstate.WebAPI\YuriiPasternak.SimpleRealEstate.WebAPI.csproj", "{74F689D7-AA00-4E30-AA9C-AB81E8ACC99A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YuriiPasternak.SimpleRealEstate.WebAPI", "YuriiPasternak.SimpleRealEstate.WebAPI\YuriiPasternak.SimpleRealEstate.WebAPI.csproj", "{74F689D7-AA00-4E30-AA9C-AB81E8ACC99A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuriiPasternak.SimpleRealEstate.Application", "YuriiPasternak.SimpleRealEstate.Application\YuriiPasternak.SimpleRealEstate.Application.csproj", "{58C8C287-6BD4-4234-AD48-23D821AF333A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YuriiPasternak.SimpleRealEstate.Application", "YuriiPasternak.SimpleRealEstate.Application\YuriiPasternak.SimpleRealEstate.Application.csproj", "{58C8C287-6BD4-4234-AD48-23D821AF333A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuriiPasternak.SimpleRealEstate.Domain", "YuriiPasternak.SimpleRealEstate.Domain\YuriiPasternak.SimpleRealEstate.Domain.csproj", "{3B4F43C9-0E96-410A-B451-ACC9B164EC8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YuriiPasternak.SimpleRealEstate.Domain", "YuriiPasternak.SimpleRealEstate.Domain\YuriiPasternak.SimpleRealEstate.Domain.csproj", "{3B4F43C9-0E96-410A-B451-ACC9B164EC8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuriiPasternak.SimpleRealEstate.Infrastructure", "YuriiPasternak.SimpleRealEstate.Infrastructure\YuriiPasternak.SimpleRealEstate.Infrastructure.csproj", "{EF4D3EF9-4B55-4946-B77E-542E395552F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YuriiPasternak.SimpleRealEstate.Infrastructure", "YuriiPasternak.SimpleRealEstate.Infrastructure\YuriiPasternak.SimpleRealEstate.Infrastructure.csproj", "{EF4D3EF9-4B55-4946-B77E-542E395552F4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YuriiPasternak.SimpleRealEstate.Application.UnitTests", "YuriiPasternak.SimpleRealEstate.Application.UnitTests\YuriiPasternak.SimpleRealEstate.Application.UnitTests.csproj", "{B05E1FF2-D7EE-456F-A227-C8A361DB0C34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{EF4D3EF9-4B55-4946-B77E-542E395552F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF4D3EF9-4B55-4946-B77E-542E395552F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF4D3EF9-4B55-4946-B77E-542E395552F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B05E1FF2-D7EE-456F-A227-C8A361DB0C34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B05E1FF2-D7EE-456F-A227-C8A361DB0C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B05E1FF2-D7EE-456F-A227-C8A361DB0C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B05E1FF2-D7EE-456F-A227-C8A361DB0C34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
