@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces.Authentication;
 using YuriiPasternak.SimpleRealEstate.Domain.Identity;
 using YuriiPasternak.SimpleRealEstate.WebAPI.Contracts;
@@ -14,13 +16,17 @@ namespace YuriiPasternak.SimpleRealEstate.WebAPI.Controllers
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _configuration;
 
-        public AuthenticationController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IJwtTokenGenerator jwtTokenGenerator, IMapper mapper)
+        public AuthenticationController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IJwtTokenGenerator jwtTokenGenerator, IMapper mapper, IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
         {
             _userManager = userManager;
             _jwtTokenGenerator = jwtTokenGenerator;
             _mapper = mapper;
             _roleManager = roleManager;
+            _httpContextAccessor = httpContextAccessor;
+            _configuration = configuration;
         }
 
         [HttpPost("register")]
@@ -73,6 +79,8 @@ namespace YuriiPasternak.SimpleRealEstate.WebAPI.Controllers
             var userRoles = await _userManager.GetRolesAsync(user);
 
             var token = _jwtTokenGenerator.GenerateToken(user.Id, user.UserName, user.FirstName, user.LastName, user.Email, userRoles.FirstOrDefault());
+
+            _httpContextAccessor?.HttpContext?.Response.Cookies.Append(_configuration["CookiesJWTToken"], token);
 
             return new AuthenticationResponse(
                user.Id,
