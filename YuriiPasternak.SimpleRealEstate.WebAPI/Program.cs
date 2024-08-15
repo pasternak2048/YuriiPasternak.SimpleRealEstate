@@ -4,6 +4,7 @@ using YuriiPasternak.SimpleRealEstate.Infrastructure;
 using System.Reflection;
 using System.Security.Claims;
 using YuriiPasternak.SimpleRealEstate.Application.Common.Interfaces;
+using Microsoft.AspNetCore.CookiePolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.ConfigureCorsPolicy();
 builder.Services.ConfigureApplication();
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -41,6 +43,13 @@ app.Use(async (context, next) =>
     currentUser.UserRole ??= user.FindFirstValue("Role");
 
     await next();
+});
+
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.Strict,
+    HttpOnly = HttpOnlyPolicy.Always,
+    Secure = CookieSecurePolicy.Always,
 });
 
 app.UseHttpsRedirection();

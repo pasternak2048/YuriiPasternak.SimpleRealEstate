@@ -39,6 +39,15 @@ namespace YuriiPasternak.SimpleRealEstate.Infrastructure
                         ValidateIssuer = false,
                         ValidateAudience = false,
                     };
+
+                    opts.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            context.Token = context.Request.Cookies[configuration["CookiesJWTToken"]];
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
 
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
